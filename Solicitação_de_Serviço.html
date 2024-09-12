@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulário de Solicitação de Serviço</title>
+    <style>
+        /* Estilos gerais */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+
+        /* Container principal */
+        .container {
+            max-width: 700px;
+            background-color: #fff;
+            padding: 20px;
+            margin: 0 auto;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin: 12px 0 6px;
+            font-weight: 500;
+            color: #444;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            background-color: #f9f9f9;
+            transition: border-color 0.3s ease;
+        }
+
+        input:focus, textarea:focus, select:focus {
+            border-color: #e30613;
+            background-color: #fff;
+            outline: none;
+        }
+
+        /* Estilos do botão */
+        button {
+            width: 100%;
+            background-color: #e30613;
+            color: #fff;
+            border: none;
+            padding: 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #c10511;
+        }
+
+        /* Estilos para múltipla escolha */
+        .multichoice {
+            display: inline-block;
+            margin-right: 15px;
+            font-weight: normal;
+            color: #555;
+        }
+
+        .multichoice input {
+            margin-right: 8px;
+        }
+
+        /* Estilo para dispositivos móveis */
+        @media screen and (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+
+            h1 {
+                font-size: 20px;
+            }
+
+            input, select, textarea {
+                padding: 10px;
+                font-size: 14px;
+            }
+
+            button {
+                padding: 12px;
+                font-size: 16px;
+            }
+        }
+
+        /* Estilos para o cabeçalho com a logo */
+        .header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .logo {
+            max-width: 130px;
+            margin-bottom: 10px;
+        }
+
+        .divider {
+            height: 4px;
+            background-color: #e30613;
+            margin-bottom: 15px;
+            border-radius: 2px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <!-- Cabeçalho com logo -->
+        <div class="header">
+            <img src="https://1drv.ms/i/s!Akiht30esEgqgoIXtOcn5s5YIGJWZw?embed=1&width=645&height=178" alt="Logo da Empresa"
+                class="logo">
+            <div class="divider"></div>
+        </div>
+
+        <h1>Ficha de Solicitação de Serviço</h1>
+
+        <form id="serviceForm" action="https://SCRIPT_URL" method="POST">
+            <label for="solicitante">Solicitante:</label>
+            <input type="text" id="solicitante" name="solicitante" required>
+
+            <label for="setor">Setor:</label>
+            <input type="text" id="setor" name="setor" required>
+
+            <label for="local">Local:</label>
+            <input type="text" id="local" name="local" required>
+
+            <label for="centroCusto">Centro de Custo:</label>
+            <select id="centroCusto" name="centroCusto" required onchange="atualizarSetor()">
+                <option value="" disabled selected>Selecione o Centro de Custo</option>
+                <!-- Opções do centro de custo -->
+                <option value="1155">1155 Industrial - PULP</option>
+                <option value="1327">1327 Comercial - AHL PULP</option>
+                <!-- Outras opções... -->
+            </select>
+
+            <label for="aplicacao">Aplicação:</label>
+            <input type="text" id="aplicacao" name="aplicacao" required>
+
+            <label>Nº Ficha de Solicitação:</label>
+            <input type="text" id="numFicha" name="numFicha" readonly>
+
+            <h3>Investimento:</h3>
+            <label class="multichoice"><input type="radio" name="investimento" value="Estoque Emerg." required> Estoque Emergência</label>
+            <label class="multichoice"><input type="radio" name="investimento" value="Manutencao" required> Manutenção</label>
+            <label class="multichoice"><input type="radio" name="investimento" value="Melhoria" required> Melhoria</label>
+            <label class="multichoice"><input type="radio" name="investimento" value="Engenharia" required> Engenharia/Ampliação</label>
+
+            <h3>Prioridade:</h3>
+            <label class="multichoice"><input type="radio" name="prioridade" value="Normal" required> Normal</label>
+            <label class="multichoice"><input type="radio" name="prioridade" value="Urgente" required> Urgente</label>
+
+            <label for="dataPedido">Data do Pedido:</label>
+            <input type="text" id="dataPedido" name="dataPedido" readonly>
+
+            <label for="dataAplicacao">Data da Aplicação:</label>
+            <input type="date" id="dataAplicacao" name="dataAplicacao" required>
+
+            <label for="quantidade">Quantidade:</label>
+            <input type="number" id="quantidade" name="quantidade" min="1" required>
+
+            <label for="unidade">Unidade:</label>
+            <input type="text" id="unidade" name="unidade" required>
+
+            <label for="descricaoServico">Descrição do Serviço:</label>
+            <textarea id="descricaoServico" name="descricaoServico" rows="4" required></textarea>
+
+            <button type="submit">Enviar Solicitação</button>
+        </form>
+    </div>
+
+    <script>
+        // Funções do JavaScript (as mesmas que já estavam no código original)
+        function gerarNumeroFicha() {
+            const setor = document.getElementById("setor").value[0] || "";
+            const local = document.getElementById("local").value[0] || "";
+            const aplicacao = document.getElementById("aplicacao").value;
+            const solicitante = document.getElementById("solicitante").value[0] || "";
+            const hoje = new Date();
+            const dia = String(hoje.getDate()).padStart(2, '0');
+            const letrasAleatorias = Array.from({ length: 4 }, () => String.fromCharCode(65 + Math.floor(Math.random() * 26))).join('');
+            const numFicha = `${setor}${local}${aplicacao[0]}${solicitante}${dia}${letrasAleatorias}`.toUpperCase();
+            document.getElementById("numFicha").value = numFicha;
+        }
+
+        function preencherDataPedido() {
+            const hoje = new Date();
+            const dia = String(hoje.getDate()).padStart(2, '0');
+            const mes = String(hoje.getMonth() + 1).padStart(2, '0'); // Meses começam em 0
+            const ano = hoje.getFullYear();
+            const dataAtual = `${dia}/${mes}/${ano}`;
+            document.getElementById("dataPedido").value = dataAtual;
+        }
+
+        function atualizarSetor() {
+            const centroCusto = document.getElementById("centroCusto").value;
+            const setores = {
+                "1155": "Industrial",
+                "1327": "Adm",
+                "1328": "Adm",
+                // Outras opções...
+            };
+            document.getElementById("setor").value = setores[centroCusto] || "";
+            gerarNumeroFicha(); // Atualiza o número da ficha ao alterar o setor
+        }
+
+        window.onload = function () {
+            preencherDataPedido();
+            gerarNumeroFicha();
+        };
+
+        document.getElementById("setor").addEventListener("input", gerarNumeroFicha);
+        document.getElementById("local").addEventListener("input", gerarNumeroFicha);
+        document.getElementById("aplicacao").addEventListener("input", gerarNumeroFicha);
+        document.getElementById("solicitante").addEventListener("input", gerarNumeroFicha);
+        document.getElementById("centroCusto").addEventListener("change", gerarNumeroFicha);
+    </script>
+</body>
+
+</html>
